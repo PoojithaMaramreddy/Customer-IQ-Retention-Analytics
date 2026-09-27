@@ -1,194 +1,237 @@
 # Dataset Documentation
 
----
+## 1. Dataset Overview
 
-# Dataset Information
+**Dataset Name:** Online Retail II
 
-**Dataset Name:**
-Online Retail II
+**Domain:** Retail / E-commerce
 
-**Project:**
-Customer IQ & Retention Analytics Platform
+**Dataset Type:** Transaction-level sales data
 
-**Source:**
-Kaggle
+**Source:** Kaggle
+**Original Source:** UCI Machine Learning Repository
 
-**Original Source:**
-UCI Machine Learning Repository
+The Online Retail II dataset contains transactional records from a UK-based online retailer. Each row represents an item-level transaction associated with an invoice, product, quantity, price, customer, date, and country.
 
-**Dataset License:**
-Publicly available for learning and research
-
-**Status:**
-Selected
-
-**Date Selected:**
-26 July 2026
+This dataset is used in the **Customer IQ & Retention Analytics Platform** to analyze customer purchasing behavior, identify customer segments, measure customer value, and support churn prediction.
 
 ---
 
-# Business Profile
+## 2. Dataset Purpose
 
-| Attribute | Information |
-|-----------|-------------|
-| Business Type | Online Retail (E-commerce) |
-| Store Type | Non-store Online Retail |
-| Country | United Kingdom (UK) |
-| Time Period | 01-Dec-2009 to 09-Dec-2011 (Approx. 2 Years) |
-| Products Sold | All-Occasion Giftware |
-| Customer Type | Individual Customers and Wholesalers |
-| Data Type | Customer Transaction Data |
+The dataset is used to answer business questions such as:
 
----
-
-# Business Understanding
-
-## Business Problem
-
-Businesses often lose valuable customers without understanding why they stop purchasing. The goal of this project is to analyze customer purchasing behaviour, identify valuable customer segments, predict potential churn, and generate actionable business insights that improve customer retention.
-
-## Why This Dataset?
-
-This dataset contains approximately two years of customer transaction history, including invoice details, customer identifiers, product information, purchase quantities, prices, and transaction timestamps.
-
-These attributes make it suitable for:
-
-- Customer Behaviour Analysis
-- RFM (Recency, Frequency, Monetary) Analysis
-- Customer Segmentation
-- Customer Retention Analysis
-- Churn Prediction
-- Business Intelligence Reporting
-- Machine Learning
+* How much revenue is generated?
+* How many customers and orders are there?
+* Which customers are most valuable?
+* How frequently do customers purchase?
+* Which customers may be at risk of churn?
+* How are customers distributed across behavioral segments?
+* Which countries contribute to sales?
+* How does sales performance change over time?
 
 ---
 
-# Dataset Structure
+## 3. Raw Dataset Structure
 
-| Attribute | Value |
-|-----------|-------|
-| Total Records | 1,067,371 |
-| Total Columns | 8 |
-| Data Format | CSV |
-| Dataset Size | ~92 MB |
-| Observation Unit | One row represents one product purchased within a customer invoice. |
-| Primary Business Entity | Customer Transactions |
+The original dataset contains the following major fields:
 
----
-
-# Column Documentation
-
-| Column | Data Type | Business Meaning | Used in Project | Notes |
-|---------|-----------|------------------|-----------------|-------|
-| Invoice | String | Transaction (Invoice) identifier | Yes (Transaction Analysis & Data Cleaning) | A single invoice can contain multiple products. |
-| StockCode | String | Product identifier | Yes (Product Analysis & Customer Purchasing Behaviour) | The same product can appear in multiple invoices. |
-| Description | String | Product name | Yes (Business Reporting & Product Analysis) | Human-readable product description. |
-| Quantity | Integer | Number of units purchased | Yes (Customer Behaviour Analysis & Revenue Calculation) | Negative values may represent returns or cancelled transactions. |
-| InvoiceDate | String *(to be converted to DateTime)* | Date and time of transaction | Yes (RFM Analysis, Trend Analysis & Time-Series Analysis) | Will be converted to datetime during preprocessing. |
-| Price | Float | Unit price of the product | Yes (Revenue Analysis & Monetary Value Calculation) | Used with Quantity to calculate Total Revenue. |
-| Customer ID | Float *(Identifier)* | Unique customer identifier | Yes (Customer Segmentation, RFM & Churn Analysis) | Missing values require investigation before customer-level analysis. |
-| Country | String | Customer's country | Yes (Geographic Analysis & Dashboard Reporting) | Used for country-wise customer and sales analysis. |
+| Column      | Description                           |
+| ----------- | ------------------------------------- |
+| Invoice     | Unique invoice/transaction identifier |
+| StockCode   | Product identifier                    |
+| Description | Product description                   |
+| Quantity    | Number of units purchased             |
+| InvoiceDate | Date and time of the transaction      |
+| Price       | Unit price of the product             |
+| Customer ID | Customer identifier                   |
+| Country     | Customer's country                    |
 
 ---
 
-# Data Quality Notes
+## 4. Dataset Characteristics
 
-## Initial Data Quality Assessment
+The dataset is transaction-level data, meaning a single invoice can contain multiple product records.
 
-| Observation | Status |
-|-------------|--------|
-| Total Records | 1,067,371 |
-| Total Columns | 8 |
-| Missing Values in Description | 4,382 |
-| Missing Values in Customer ID | 243,007 |
-| Missing Values in Other Columns | None observed |
-| Negative Quantity Values | Present |
-| Negative Price Values | Present |
-| InvoiceDate Data Type | Stored as String |
-| Dataset Successfully Loaded | Yes |
+Important characteristics include:
+
+* Multiple rows can belong to the same invoice.
+* A customer can have multiple invoices.
+* A customer can purchase multiple products.
+* Quantity represents units purchased.
+* Price represents unit price.
+* InvoiceDate contains transaction date and time.
+* Customer ID identifies customers.
+* Country provides geographic information.
+* The dataset contains real-world data quality issues that require validation and cleaning.
 
 ---
 
-# Cleaning Decisions
+## 5. Derived Fields
 
-**Current Status:** Not Started
+The project creates additional analytical fields from the original transaction data.
 
-No cleaning operations have been performed yet.
+### Total Amount
 
-The project follows the professional workflow:
+The transaction value is calculated as:
 
-```
-Understand Data
-      ↓
-Identify Problems
-      ↓
-Investigate Problems
-      ↓
-Make Cleaning Decisions
-      ↓
-Clean the Data
+```text
+Total Amount = Quantity × Price
 ```
 
-Cleaning decisions will only be made after understanding the cause of missing values, negative values, duplicates, and other data quality issues.
+This field is used to calculate sales and customer monetary value.
 
 ---
 
-# Feature Engineering Notes
+## 6. Customer-Level Analytical Data
 
-**Current Status:** Not Started
+The project transforms transaction-level data into customer-level information for RFM analysis.
 
-Planned derived features include:
+### RFM Metrics
 
-- Total Amount = Quantity × Price
-- Purchase Year
-- Purchase Month
-- Purchase Day
-- Purchase Hour
-- Recency
-- Frequency
-- Monetary Value (RFM)
+**Recency**
 
-Additional engineered features will be documented during the preprocessing stage.
+Number of days since the customer's most recent purchase.
 
----
+**Frequency**
 
-# Initial Observations
+Number of purchases/orders made by the customer.
 
-- The dataset contains over one million retail transaction records collected over approximately two years.
-- Each row represents one product purchased within a customer invoice.
-- A single invoice can contain multiple products.
-- Invoice numbers are not unique because one invoice can include multiple purchased items.
-- Customer ID contains missing values that require investigation before customer-level analysis.
-- Description contains a small number of missing values.
-- InvoiceDate is currently stored as a string and will later be converted into a datetime data type.
-- Quantity contains negative values, which may represent product returns or cancelled transactions.
-- Price contains negative values, which may represent refunds, adjustments, or data inconsistencies.
-- Quantity and Price anomalies will be investigated before making any cleaning decisions.
-- The dataset appears suitable for customer analytics, customer segmentation, churn prediction, and business intelligence reporting.
+**Monetary**
+
+Total monetary value generated by the customer.
+
+These metrics are used to understand customer purchasing behavior and create customer segments.
 
 ---
 
-# Current Dataset Status
+## 7. Customer Segmentation
 
-| Task | Status |
-|------|--------|
-| Dataset Selected | ✅ Completed |
-| Dataset Downloaded | ✅ Completed |
-| Dataset Organized | ✅ Completed |
-| Dataset Loaded into Pandas | ✅ Completed |
-| Initial Exploration (`head()`) | ✅ Completed |
-| Dataset Structure Analysis (`info()`) | ✅ Completed |
-| Statistical Summary (`describe()`) | ✅ Completed |
-| Missing Value Analysis | ⏳ In Progress |
-| Duplicate Analysis | ⏳ Pending |
-| Data Cleaning | ⏳ Pending |
-| Feature Engineering | ⏳ Pending |
+Customers are grouped into behavioral segments based on their RFM characteristics.
+
+The project uses the following segments:
+
+* Champions
+* Loyal Customers
+* Potential Loyalists
+* At Risk
+* Lost / Hibernating
+
+These segments are used in the Customer Intelligence dashboard to understand differences in customer behavior and value.
 
 ---
 
-# Version History
+## 8. Churn Prediction Data
 
-| Version | Date | Changes |
-|----------|------|---------|
-| v1.0 | 26-Jul-2026 | Dataset selected and documented. |
-| v1.1 | 27-Jul-2026 | Added dataset structure, column documentation, initial data quality assessment, observations, and project progress after initial data exploration using Pandas (`head()`, `info()`, and `describe()`). |
+The project includes a customer-level churn prediction dataset containing:
+
+| Column            | Description                          |
+| ----------------- | ------------------------------------ |
+| Customer ID       | Unique customer identifier           |
+| Recency           | Customer recency value               |
+| Frequency         | Customer purchase frequency          |
+| Monetary          | Customer monetary value              |
+| Churn Probability | Predicted probability of churn       |
+| Predicted Churn   | Model-predicted churn classification |
+| Actual Churn      | Actual churn label, where available  |
+
+The churn prediction output is used to identify customers who may require retention attention.
+
+---
+
+## 9. Churn Probability Bands
+
+For dashboard analysis, churn probabilities are grouped into five bands:
+
+| Band    | Probability Range                          |
+| ------- | ------------------------------------------ |
+| 0–20%   | Low predicted churn probability            |
+| 20–40%  | Relatively low predicted churn probability |
+| 40–60%  | Moderate predicted churn probability       |
+| 60–80%  | High predicted churn probability           |
+| 80–100% | Very high predicted churn probability      |
+
+These bands make the model output easier to analyze visually.
+
+---
+
+## 10. Data Quality Considerations
+
+The dataset requires validation before analysis.
+
+Important checks include:
+
+* Missing values
+* Duplicate records
+* Invalid or unusual quantities
+* Invalid prices
+* Missing customer identifiers
+* Cancelled transactions
+* Date and time consistency
+* Data type consistency
+* Negative transaction values
+* Product description inconsistencies
+
+Data cleaning and validation are performed before using the data for analytical outputs.
+
+---
+
+## 11. Power BI Usage
+
+The processed data is used in Power BI to create four analytical dashboard pages:
+
+1. **Executive Overview**
+2. **Customer Intelligence**
+3. **Churn & Retention**
+4. **Sales & Product Analytics**
+
+The dashboards provide KPI cards, customer segmentation analysis, sales trends, churn analysis, customer-level risk information, and geographic sales analysis.
+
+---
+
+## 12. Key Business Metrics
+
+The project tracks several important metrics:
+
+* Total Sales
+* Total Customers
+* Total Orders
+* Average Order Value
+* Total Quantity
+* Average Recency
+* Average Customer Value
+* Churn Rate
+* At-Risk Customers
+* Average Churn Probability
+
+---
+
+## 13. Dataset Role in the Project
+
+The Online Retail II dataset is the primary source for the Customer IQ & Retention Analytics Platform.
+
+The overall analytical flow is:
+
+```text
+Raw Transaction Data
+        ↓
+Data Cleaning & Validation
+        ↓
+Customer-Level Aggregation
+        ↓
+RFM Analysis
+        ↓
+Customer Segmentation
+        ↓
+Churn Prediction
+        ↓
+Power BI Analytics
+        ↓
+Customer & Business Insights
+```
+
+---
+
+## 14. Important Note
+
+The dataset is transaction-level retail data. Therefore, customer-level metrics such as Recency, Frequency, Monetary Value, and Churn Probability are derived analytical outputs rather than original columns in the raw dataset.
