@@ -218,13 +218,13 @@ These bands are dashboard categories created for this project.
 
 ---
 
-# 📊 Power BI Dashboard
+## 📊 Power BI Dashboard
 
-The final Power BI report contains four pages.
+The final Power BI report contains four interactive pages covering business performance, customer intelligence, churn risk, and sales analytics.
 
 ### 1. Executive Overview
 
-Provides a high-level view of business performance and customer health.
+Provides a high-level view of overall business performance and customer health.
 
 **Includes:**
 
@@ -237,11 +237,13 @@ Provides a high-level view of business performance and customer health.
 * Customer Segmentation
 * Predicted Churn Rate
 
+![Executive Overview](docs/images/Executive%20Overview.png)
+
 ---
 
 ### 2. Customer Intelligence
 
-Focuses on customer behavior and value.
+Focuses on customer behavior, value, and RFM-based segmentation.
 
 **Includes:**
 
@@ -252,11 +254,13 @@ Focuses on customer behavior and value.
 * Customer Value by Segment
 * Recency vs Frequency
 
+![Customer Intelligence](docs/images/Customer%20Intelligence.png)
+
 ---
 
 ### 3. Churn & Retention
 
-Focuses on customer churn risk.
+Focuses on customer churn risk and retention analysis.
 
 **Includes:**
 
@@ -266,6 +270,8 @@ Focuses on customer churn risk.
 * Churn by Customer Segment
 * Churn Probability Distribution
 * High-Risk Customer Analysis
+
+![Churn & Retention](docs/images/Churn%20%26%20Retention.png)
 
 ---
 
@@ -279,6 +285,9 @@ Focuses on sales performance and geographic contribution.
 * Total Quantity
 * Monthly Sales Trend
 * Sales by Country
+
+![Sales & Product Analytics](docs/images/Sales%20%26%20Product%20Analytics.png)
+
 
 ---
 
